@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bills Payment Portal</title>
+    <link rel="stylesheet" href="Entrep.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        h2 {
+            color: #2980b9;
+            margin-bottom: 15px;
+            text-decoration: underline;
+            animation: slideIn 0.5s;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        p {
+            margin: 10px 0;
+        }
+        select, input[type="text"] {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        select:focus, input[type="text"]:focus {
+            border-color: #1abc9c;
+            outline: none;
+            box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+        }
+        button {
+            padding: 12px 18px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+        }
+        #additionalDetails {
+            display: none;
+            margin-top: 15px;
+            text-align: left;
+        }
+        #additionalDetails input {
+            margin: 5px 0;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        #modalClose {
+            cursor: pointer;
+            float: right;
+            color: #3498db;
+            font-size: 20px;
+        }
+        .receipt-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .receipt-header h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #2c3e50;
+        }
+        .receipt-details {
+            margin-bottom: 15px;
+        }
+        .receipt-details p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+        .status {
+            font-weight: bold;
+            color: #27ae60; /* Success color */
+        }
+        /* Loading Screen Styles */
+        #loadingScreen {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-align: center;
+            padding-top: 40%; /* Adjusted for centering */
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bills Payment Portal</h1>
+    <div class="container">
+        <h2>Pay Your Essentials Using Magnify!</h2>
+        
+        <input type="text" id="billType" placeholder="Enter Bill Type (e.g., Electricity)" required>
+        <input type="text" id="billDetails" placeholder="Enter Bill Details" required>
+        
+        <h3>Select Payment Mode:</h3>
+        <select id="paymentMode">
+            <option value="">Select Payment Mode</option>
+            <option value="PNB">Philippine National Bank</option>
+            <option value="BPI">Bank of the Philippine Islands</option>
+            <option value="BillEase">BillEase</option>
+            <option value="GCash">GCash</option>
+            <option value="GooglePay">GooglePay</option>
+            <option value="ApplePay">ApplePay</option>
+        </select>
+
+        <div id="additionalDetails">
+            <h4>Enter Additional Details:</h4>
+            <div id="cardDetailsSection" style="display: none;">
+                <input type="text" id="cardNumber" placeholder="Card Number" required>
+                <input type="text" id="cardholderName" placeholder="Cardholder Name" required>
+                <input type="text" id="expDate" placeholder="Expiration Date (MM/YY)" required>
+                <input type="text" id="securityCode" placeholder="Security Code (CCV)" required>
+                <input type="text" id="billingAddress" placeholder="Billing Address" required>
+            </div>
+            <div id="gcashSection" style="display: none;">
+                <input type="text" id="gcashNumber" placeholder="Enter GCash Number" required>
+            </div>
+            <div id="googlePaySection" style="display: none;">
+                <input type="text" id="googlePayDetails" placeholder="Enter Google Pay Details" required>
+            </div>
+            <div id="applePaySection" style="display: none;">
+                <input type="text" id="applePayDetails" placeholder="Enter Apple Pay Details" required>
+            </div>
+        </div>
+
+        <button id="confirmPaymentButton">Confirm Payment</button>
+        
+        <div id="confirmationMessage" style="display:none;"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div>Processing your payment...</div> <!-- Centered loading message -->
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span id="modalClose">&times;</span>
+            <div class="receipt-header">
+                <h2>Payment Receipt</h2>
+            </div>
+            <div class="receipt-details">
+                <p><strong>Bill Type:</strong> <span id="receiptBillType"></span></p>
+                <p><strong>Bill Details:</strong> <span id="receiptBillDetails"></span></p>
+                <p><strong>Payment Mode:</strong> <span id="receiptPaymentMode"></span></p>
+                <p class="status">Status: Payment Successful</p>
+            </div>
+            <p style="text-align: center;">Thank you for using Magnify!</p>
+            <button id="returnHomeButton">Return to Homepage</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("paymentMode").addEventListener("change", function() {
+            const paymentMode = this.value;
+            const additionalDetailsDiv = document.getElementById("additionalDetails");
+            const cardDetailsSection = document.getElementById("cardDetailsSection");
+            const gcashSection = document.getElementById("gcashSection");
+            const googlePaySection = document.getElementById("googlePaySection");
+            const applePaySection = document.getElementById("applePaySection");
+
+            // Hide all additional details sections initially
+            cardDetailsSection.style.display = "none";
+            gcashSection.style.display = "none";
+            googlePaySection.style.display = "none";
+            applePaySection.style.display = "none";
+
+            // Show relevant details based on selected payment mode
+            if (paymentMode === "PNB" || paymentMode === "BPI" || paymentMode === "BillEase") {
+                cardDetailsSection.style.display = "block";
+            } else if (paymentMode === "GCash") {
+                gcashSection.style.display = "block";
+            } else if (paymentMode === "GooglePay") {
+                googlePaySection.style.display = "block";
+            } else if (paymentMode === "ApplePay") {
+                applePaySection.style.display = "block";
+            }
+
+            additionalDetailsDiv.style.display = (paymentMode) ? "block" : "none";
+        });
+
+        document.getElementById("confirmPaymentButton").addEventListener("click", function() {
+            const loadingScreen = document.getElementById("loadingScreen");
+            loadingScreen.style.display = "block"; // Show loading screen
+            
+            setTimeout(() => {
+                loadingScreen.style.display = "none"; // Hide loading screen after 3 seconds
+                
+                // Simulate payment confirmation and show receipt
+                const billType = document.getElementById("billType").value;
+                const billDetails = document.getElementById("billDetails").value;
+                const paymentMode = document.getElementById("paymentMode").value;
+
+                // Display receipt data
+                document.getElementById("receiptBillType").innerText = billType;
+                document.getElementById("receiptBillDetails").innerText = billDetails;
+                document.getElementById("receiptPaymentMode").innerText = paymentMode;
+
+                // Show the modal
+                const modal = document.getElementById("myModal");
+                modal.style.display = "block";
+            }, 3000); // Adjust the time for how long the loading screen should appear
+        });
+
+        // Close modal
+        document.getElementById("modalClose").onclick = function() {
+            const modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        };
+
+        // Return to homepage
+        document.getElementById("returnHomeButton").onclick = function() {
+            window.location.href = "Entrep.html"; // Redirect to homepage
+        };
+    </script>
+</body>
+</html>

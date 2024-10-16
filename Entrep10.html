@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Bank - Magnify!</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Updated font */
+            background: linear-gradient(135deg, #87CEEB, #4682B4); /* Blue gradient background */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Prevents scrolling */
+        }
+
+        .container {
+            max-width: 600px; /* Set a maximum width for the container */
+            margin: auto;
+            padding: 30px; /* Increased padding for a more spacious look */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            animation: fadeIn 0.5s ease-in-out; /* Fade-in effect for the container */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333; /* Darker text for better readability */
+            margin-bottom: 30px; /* Space below the heading */
+            font-size: 24px; /* Increased font size for heading */
+        }
+
+        .bank-option {
+            margin: 15px 0; /* Added margin for spacing */
+            padding: 20px; /* Added padding for each option */
+            border-radius: 10px; /* Rounded corners for bank options */
+            display: flex; /* Flex layout for better alignment */
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
+            background: linear-gradient(90deg, #f0f8ff, #e6e6fa); /* Gradient background for options */
+            transition: transform 0.2s, box-shadow 0.3s; /* Smooth transition for hover effect */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        .bank-option:hover {
+            transform: scale(1.05); /* Slightly enlarge option on hover */
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5); /* Deeper shadow on hover */
+        }
+
+        .bank-button {
+            padding: 12px 20px; /* Padding for better button size */
+            margin-left: 10px; /* Space between buttons */
+            background-color: #007BFF; /* Primary button color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px; /* Slightly larger font size */
+            transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition for hover */
+            display: flex; /* Align icon and text */
+            align-items: center; /* Center items vertically */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Button shadow for depth */
+        }
+
+        .bank-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+            transform: translateY(-2px); /* Lift effect on hover */
+        }
+
+        .bank-icon {
+            width: 40px; /* Adjusted icon size */
+            height: 40px; /* Adjusted icon size */
+            margin-right: 10px; /* Space between icon and text */
+            transition: transform 0.3s; /* Smooth transition for icon */
+        }
+
+        .bank-option:hover .bank-icon {
+            transform: scale(1.1); /* Enlarge icon on hover */
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Animation for container */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Select Deposit Method</h1>
+
+        <div class="bank-option">
+            <img class="bank-icon" src="https://img.icons8.com/ios-filled/50/000000/bank-building.png" alt="PNB Icon" />
+            <button class="bank-button" onclick="redirectTo('https://www.pnb.com.ph')">Philippine National Bank</button>
+        </div>
+
+        <div class="bank-option">
+            <img class="bank-icon" src="https://img.icons8.com/ios-filled/50/000000/bank.png" alt="BPI Icon" />
+            <button class="bank-button" onclick="redirectTo('https://www.bpi.com.ph')">Bank of the Philippine Islands</button>
+        </div>
+
+        <div class="bank-option">
+            <img class="bank-icon" src="https://img.icons8.com/ios-filled/50/000000/mobile-payment.png" alt="GCash Icon" />
+            <button class="bank-button" onclick="redirectTo('https://www.gcash.com')">GCash</button>
+        </div>
+
+        <div class="bank-option">
+            <img class="bank-icon" src="https://img.icons8.com/ios-filled/50/000000/bank.png" alt="Metrobank Icon" />
+            <button class="bank-button" onclick="redirectTo('https://www.metrobank.com.ph')">Metrobank</button>
+        </div>
+
+        <div class="bank-option">
+            <img class="bank-icon" src="https://img.icons8.com/ios-filled/50/000000/bank.png" alt="ASPAC Bank Icon" />
+            <button class="bank-button" onclick="redirectTo('https://www.aspacbank.com.ph')">ASPAC Bank</button>
+        </div>
+
+        <div class="bank-option">
+            <img class="bank-icon" src="https://img.icons8.com/ios-filled/50/000000/bank.png" alt="Union Bank Icon" />
+            <button class="bank-button" onclick="redirectTo('https://www.unionbankph.com')">Union Bank</button>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Magnify! By Group 1. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Redirect function
+        function redirectTo(url) {
+            window.location.href = url; // Redirect to the chosen bank's website
+        }
+    </script>
+</body>
+
+</html>

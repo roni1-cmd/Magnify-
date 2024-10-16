@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Planner</title>
+    <link rel="stylesheet" href="Entrep.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        input, select {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        input:focus {
+            border-color: #1abc9c;
+            box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+            outline: none;
+        }
+        button {
+            padding: 12px 18px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 100%;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #219653;
+            transform: translateY(-2px);
+        }
+        .chart-container {
+            margin-top: 20px;
+            width: 100%;
+            height: 400px;
+        }
+        .suggestions {
+            margin-top: 20px;
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Budget Planner</h1>
+        <div class="description">This budget planner helps you track your income and expenses, ensuring you stay on top of your financial goals.</div>
+        
+        <!-- Income Section -->
+        <h3>Monthly Income</h3>
+        <input type="number" id="monthlyIncome" placeholder="Enter your monthly income" required>
+
+        <!-- Expense Section -->
+        <h3>Monthly Expenses</h3>
+        <input type="number" id="housingExpense" placeholder="Housing (e.g. rent, mortgage)">
+        <input type="number" id="foodExpense" placeholder="Food and Groceries">
+        <input type="number" id="transportExpense" placeholder="Transport">
+        <input type="number" id="entertainmentExpense" placeholder="Entertainment">
+        <input type="number" id="otherExpense" placeholder="Other Expenses">
+        
+        <!-- Savings Goal -->
+        <h3>Savings Goal</h3>
+        <input type="number" id="savingsGoal" placeholder="Enter your monthly savings goal">
+
+        <!-- Buttons to Update & Display Chart -->
+        <button id="updateChartBtn">Update Budget</button>
+
+        <!-- Chart Display -->
+        <div class="chart-container">
+            <canvas id="budgetChart"></canvas>
+        </div>
+
+        <!-- Suggestions Section -->
+        <h3>Suggestions</h3>
+        <div id="suggestions" class="suggestions fade-in"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('budgetChart').getContext('2d');
+        let budgetChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Income', 'Expenses', 'Savings Goal'],
+                datasets: [{
+                    label: 'Budget Overview',
+                    data: [0, 0, 0],
+                    backgroundColor: ['#27ae60', '#e74c3c', '#3498db'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        document.getElementById('updateChartBtn').addEventListener('click', function() {
+            const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const expenses = parseFloat(document.getElementById('housingExpense').value || 0) +
+                             parseFloat(document.getElementById('foodExpense').value || 0) +
+                             parseFloat(document.getElementById('transportExpense').value || 0) +
+                             parseFloat(document.getElementById('entertainmentExpense').value || 0) +
+                             parseFloat(document.getElementById('otherExpense').value || 0);
+            const savingsGoal = parseFloat(document.getElementById('savingsGoal').value) || 0;
+
+            // Update chart
+            budgetChart.data.datasets[0].data = [income, expenses, savingsGoal];
+            budgetChart.update();
+
+            // Provide suggestions
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '';
+
+            if (income < expenses) {
+                suggestions.innerHTML = "Your expenses exceed your income. Try identifying non-essential expenses to reduce your spending. Consider making a list of your expenses to see where you can cut back. Implementing small changes can significantly impact your financial health over time.";
+            } else if (income - expenses < savingsGoal) {
+                suggestions.innerHTML = "You might not reach your savings goal this month. Evaluate your budget to find areas to adjust. Prioritize your expenses and see if there are any unnecessary purchases you can delay. Every little bit helps, so aim to save even a small amount each month.";
+            } else {
+                suggestions.innerHTML = "You are on track with your budget! Great job managing your finances. Continue to monitor your spending and stay disciplined in your savings. Maintaining this habit can lead to financial security in the long run.";
+            }
+        });
+    </script>
+</body>
+</html>

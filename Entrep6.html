@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Magnify! By Group 1</title>
+    <link rel="stylesheet" href="Entrep.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc); /* Gradient background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .back-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ffffff;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo {
+            width: 50px;
+            height: auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px); /* Ensure inputs are proportional */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+
+        /* Loading screen styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #007bff;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        .checkmark {
+            width: 50px;
+            height: 50px;
+            margin-top: 10px;
+            display: none; /* Hide checkmark by default */
+            color: #28a745; /* Green color for checkmark */
+            font-size: 50px; /* Size for checkmark */
+            position: relative; /* For positioning */
+        }
+
+        .checkmark:after {
+            content: '';
+            position: absolute;
+            width: 15px; /* Width of the checkmark */
+            height: 30px; /* Height of the checkmark */
+            border: solid #28a745; /* Color of the checkmark */
+            border-width: 0 5px 5px 0; /* Create the checkmark shape */
+            transform: rotate(45deg); /* Rotate to make it a checkmark */
+            left: 15px; /* Position it correctly */
+            top: 5px; /* Position it correctly */
+            opacity: 0; /* Initially hidden */
+            animation: checkmarkFadeIn 0.5s forwards; /* Animation for checkmark */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes checkmarkFadeIn {
+            to {
+                opacity: 1; /* Fade in effect */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-arrow" onclick="goBack()">&#8592;</div>
+    <div class="container">
+        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006506.png" alt="Magnifying Glass Logo" class="logo">
+        <h2>Sign In</h2>
+        <input type="text" id="email" placeholder="Google Email or Phone" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="signIn()">Sign In</button>
+        <p class="error" id="error-message"></p>
+    </div>
+
+    <!-- Loading screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner" id="spinner"></div>
+        <div class="checkmark" id="checkmark"></div> <!-- Checkmark icon -->
+    </div>
+
+    <script>
+        function showLoadingScreen() {
+            document.getElementById("loadingScreen").style.display = "flex";
+            document.getElementById("spinner").style.display = "block"; // Show spinner
+            document.getElementById("checkmark").style.display = "none"; // Hide checkmark
+        }
+
+        function hideLoadingScreen() {
+            document.getElementById("loadingScreen").style.display = "none";
+        }
+
+        function signIn() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            // Basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (emailPattern.test(email)) {
+                showLoadingScreen();
+                
+                setTimeout(() => {
+                    // Hide spinner and show checkmark after loading
+                    document.getElementById("spinner").style.display = "none"; // Hide spinner
+                    document.getElementById("checkmark").style.display = "block"; // Show checkmark
+                    
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.location.href = "Entrep.html"; // Redirect after success
+                    }, 1000); // 1-second delay before redirection
+                }, 2000); // Simulating loading time with 2 seconds delay
+            } else {
+                errorMessage.textContent = "Invalid email or password.";
+            }
+        }
+
+        function goBack() {
+            window.location.href = "Entrep5.html";
+        }
+
+        // Add event listener for the Enter key
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                signIn();
+            }
+        });
+    </script>
+</body>
+</html>

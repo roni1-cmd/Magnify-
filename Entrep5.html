@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="Entrep.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-container h1 {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            font-size: 16px;
+            display: flex;
+            align-items: center; /* Aligns items vertically in the button */
+            justify-content: center; /* Centers the content in the button */
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .motto {
+            font-size: 16px; /* Increased font size */
+            color: #fff; /* Set color to white for visibility */
+            margin-bottom: 20px; /* Space below the motto */
+        }
+
+        .create-account {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .create-account a {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+        .google-logo {
+            width: 20px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Magnify!</h1>
+        <p class="motto">Your gateway to financial management<br><span style="font-size: 10px;">by Group 1</span></p>
+        <button onclick="signIn()">
+            <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png" alt="Google Logo" class="google-logo"> Sign In with Google
+        </button>
+        <p class="create-account">Don't have one? <a href="https://accounts.google.com/signup" target="_blank">Create your own</a></p>
+    </div>
+    <script>
+        function signIn() {
+            // Redirect to the sign-in page for Google account
+            window.location.href = 'Entrep6.html'; // Redirect to sign-in.html
+        }
+    </script>
+</body>
+</html>

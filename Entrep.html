@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnify! By Group 1</title>
+    <link rel="stylesheet" href="Entrep.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #007bff, #f0f2f5);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .navbar img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 15px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #0056b3;
+        }
+
+        .tab-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .tab-content h2 {
+            margin-top: 0;
+        }
+
+        .button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            background-color: #dc3545;
+        }
+
+        .back-button:hover {
+            background-color: #c82333;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        a {
+            text-align: center;
+            display: block;
+            margin: 10px auto;
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006506.png" alt="Magnifying Glass Logo">
+        <h1>Magnify! By Group 1</h1>
+    </div>
+
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button" onclick="openTab('transactionTab')">
+                <img src="https://img.icons8.com/ios-filled/50/000000/list.png" alt="Track List Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Track List
+            </button>
+            <button class="tab-button" onclick="openTab('calculatorTab')">
+                <img src="https://img.icons8.com/ios-filled/50/000000/calculator.png" alt="Calculator Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Calculators
+            </button>
+            <button class="tab-button" onclick="openTab('analyticsTab')">
+                <img src="https://img.icons8.com/ios-filled/50/000000/statistics.png" alt="Analytics Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Analytics
+            </button>
+            <button class="tab-button" onclick="window.location.href='Entrep7.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/calendar.png" alt="Calendar Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Calendar
+            </button>
+            <button class="tab-button" onclick="window.location.href='Entrep8.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/user.png" alt="Profile Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Profile
+            </button>
+            <button class="tab-button" onclick="window.location.href='Entrep9.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/currency-exchange.png" alt="Currency Converter Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Currency Converter
+            </button>
+            <button class="tab-button" onclick="window.location.href='Entrep12.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/money-bag.png" alt="Budget Planner Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Budget Planner
+            </button>            
+            <!-- New Financial Resources and Guidance Tab -->
+            <button class="tab-button" onclick="window.location.href='entrep11.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/book.png" alt="Resources Logo" style="width: 20px; height: 20px; vertical-align: middle; margin-right: 5px;">
+                Financial Resources and Guidance
+            </button>
+        </div>
+
+        <div id="transactionTab" class="tab-content">
+            <h2>Add Transaction</h2>
+            <select id="type" onchange="toggleDescriptionOptions()">
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
+            </select>
+            <select id="description" required></select>
+            <input type="number" id="amount" placeholder="Amount" required>
+            <button id="addTransaction" class="button">Add Transaction</button>
+
+            <h2>Transaction List</h2>
+            <ul id="transactionList"></ul>
+
+            <h2>Total Balance: ₱<span id="balance">0</span></h2>
+
+            <h2>Suggestions</h2>
+            <ul id="actionSuggestions"></ul>
+        </div>
+
+        <div id="calculatorTab" class="tab-content" style="display:none;">
+            <h2>Calculators</h2>
+            <h3>Mortgage Calculator</h3>
+            <button id="openMortgageCalculator" class="button">Open Mortgage Calculator</button>
+            <div id="mortgageCalculatorModal" style="display:none;">
+                <input type="number" id="mortgageAmount" placeholder="Mortgage Amount">
+                <input type="number" id="interestRate" placeholder="Interest Rate (%)">
+                <input type="number" id="loanTerm" placeholder="Loan Term (Years)">
+                <button id="calculateMortgage" class="button">Calculate Mortgage</button>
+                <h3 id="mortgageResult"></h3>
+                <button id="closeMortgageCalculator" class="button">Close</button>
+            </div>
+
+            <h3>Tax Calculator</h3>
+            <button id="openTaxCalculator" class="button">Open Tax Calculator</button>
+            <div id="taxCalculatorModal" style="display:none;">
+                <input type="number" id="income" placeholder="Income">
+                <input type="number" id="taxRate" placeholder="Tax Rate (%)">
+                <button id="calculateTax" class="button">Calculate Tax</button>
+                <h3 id="taxResult"></h3>
+                <button id="closeTaxCalculator" class="button">Close</button>
+            </div>
+        </div>
+
+        <div id="analyticsTab" class="tab-content" style="display:none;">
+            <h2>Analytics</h2>
+            <h2>Graph Type</h2>
+            <select id="graphType" onchange="updateChart()">
+                <option value="bar">Bar Chart</option>
+                <option value="pie">Pie Chart</option>
+                <option value="line">Line Chart</option>
+            </select>
+            <canvas id="financialChart" width="400" height="200"></canvas>
+        </div>
+
+        <h2>Manage your bills:</h2>
+        <a href="Entrep4.html">Pay Your Bills Here</a>
+
+        <!-- Reset Button -->
+        <button id="resetButton" onclick="resetAll()" class="button back-button">Reset Data</button>
+    </div>
+
+    <script src="Entrep.js"></script>
+</body>
+
+</html>

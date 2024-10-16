@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bills Payment Portal</title>
+    <link rel="stylesheet" href="Entrep.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #e6f0ff, #f9f9f9);
+            color: #333;
+        }
+
+        .bills-portal {
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .bills-portal h2 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .bill-option {
+            background: #f0f8ff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden; /* Ensure the background circle fits */
+        }
+
+        .bill-option:hover {
+            transform: translateY(-5px) scale(1.02); /* Scale up slightly on hover */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .bill-icon {
+            width: 50px; /* Increase icon size */
+            height: 50px; /* Increase icon size */
+            border-radius: 50%; /* Make the icon circular */
+            background: #e6f0ff; /* Add a background */
+            padding: 10px; /* Space inside the circle */
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .payment-button {
+            background: linear-gradient(to right, #28a745, #218838);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .payment-button:hover {
+            transform: scale(1.05); /* Slightly grow button on hover */
+        }
+
+        /* Back Button Style */
+        .back-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            text-align: center;
+            display: block;
+            margin: 20px auto 0;
+            width: 50%;
+        }
+
+        .back-button:hover {
+            background: #0056b3;
+            transform: scale(1.05); /* Slightly grow back button on hover */
+        }
+
+        /* Circle Tab Styles */
+        .circle-tab {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .circle-tab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Hidden section for "Sell your goods" */
+        .sell-section {
+            position: fixed;
+            bottom: 120px;
+            right: 50px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            text-align: center;
+        }
+
+        .sell-section p {
+            font-size: 16px;
+            margin: 0 0 10px;
+        }
+
+        .sell-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .sell-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="https://cdn-icons-png.flaticon.com/512/1006/1006506.png" alt="Magnifying Glass Logo" style="width: 50px; height: auto; vertical-align: middle;">
+        <h1 style="display: inline-block; margin-left: 10px;">Magnify! By Group 1</h1>
+    </div>
+
+    <div class="bills-portal">
+        <h2>Bills Payment Portal</h2>
+        <div class="bill-option">
+            <img src="https://cdn-icons-png.flaticon.com/512/1180/1180806.png" alt="Utility Bill Icon" class="bill-icon">
+            <h3>Utility Bill</h3>
+            <p>Pay your utility bills easily and quickly.</p>
+            <button class="payment-button" onclick="redirectToPayment('Utility Bill')">Pay Now</button>
+        </div>
+        <div class="bill-option">
+            <img src="https://cdn-icons-png.flaticon.com/512/1160/1160412.png" alt="Internet Bill Icon" class="bill-icon">
+            <h3>Internet Bill</h3>
+            <p>Stay connected by paying your internet bill on time.</p>
+            <button class="payment-button" onclick="redirectToPayment('Internet Bill')">Pay Now</button>
+        </div>
+        <div class="bill-option">
+            <img src="https://cdn-icons-png.flaticon.com/512/1674/1674844.png" alt="Phone Bill Icon" class="bill-icon">
+            <h3>Phone Bill</h3>
+            <p>Keep your phone service active with timely payments.</p>
+            <button class="payment-button" onclick="redirectToPayment('Phone Bill')">Pay Now</button>
+        </div>
+        <div class="bill-option">
+            <img src="https://cdn-icons-png.flaticon.com/512/1505/1505406.png" alt="Credit Card Bill Icon" class="bill-icon">
+            <h3>Credit Card Bill</h3>
+            <p>Avoid late fees by paying your credit card bill.</p>
+            <button class="payment-button" onclick="redirectToPayment('Credit Card Bill')">Pay Now</button>
+        </div>
+
+        <!-- Back Button -->
+        <button class="back-button" onclick="goBack()">Back</button>
+    </div>
+
+    <!-- Circle Tab for "Sell your goods? We got you!" -->
+    <div class="circle-tab" onclick="toggleSellSection()">
+        <span>?</span>
+    </div>
+
+    <div class="sell-section">
+        <p>Sell your goods? We got you!</p>
+        <button class="sell-button" onclick="redirectToSell()">Learn More</button>
+    </div>
+
+    <script>
+        function redirectToPayment(billType) {
+            // Store the bill type in local storage to access it later
+            localStorage.setItem("billType", billType);
+            // Redirect to the payment form page
+            window.location.href = "Entrep2.html"; // Change to your actual second HTML file name
+        }
+
+        function goBack() {
+            window.history.back(); // Go back to the previous page
+        }
+
+        // Toggle the visibility of the sell section
+        function toggleSellSection() {
+            const sellSection = document.querySelector('.sell-section');
+            sellSection.style.display = sellSection.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Redirect to the specified link
+        function redirectToSell() {
+            window.location.href = 'https://magnifybygroup1.mystrikingly.com/4';
+        }
+    </script>
+
+    <script src="Entrep.js"></script>
+</body>
+</html>

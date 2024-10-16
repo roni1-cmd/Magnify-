@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Magnify!</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <script src="script.js" defer></script> <!-- Link to your JavaScript file -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif; /* Modern font */
+            background: linear-gradient(135deg, #007BFF, #0056b3); /* Blue gradient background */
+            margin: 0;
+            padding: 0;
+            color: #ffffff; /* White text for better contrast */
+        }
+
+        .container {
+            max-width: 500px; /* Set a maximum width for the container */
+            margin: auto;
+            padding: 20px;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+            background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px; /* Space below the heading */
+            font-size: 28px; /* Increased font size for heading */
+            color: #ffffff; /* White text */
+        }
+
+        .profile-info {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px; /* Rounded corners for info section */
+            background-color: rgba(255, 255, 255, 0.15); /* Slightly transparent background */
+            backdrop-filter: blur(10px); /* Blurring effect for modern look */
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            color: #E1E1E1; /* Lighter color for labels */
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: #FFFFFF; /* White text for info */
+        }
+
+        .name-input {
+            margin: 20px 0; /* Added margin for spacing */
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: flex-start; /* Align items to the left */
+        }
+
+        .name-input input {
+            width: 100%; /* Full width for better alignment */
+            max-width: 250px; /* Max width for input field */
+            padding: 12px; /* Added padding for better usability */
+            margin-top: 5px; /* Space above the input field */
+            font-size: 16px; /* Slightly larger font size */
+            border: none; /* No border for a clean look */
+            border-radius: 8px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.2); /* Light background */
+            color: #000; /* Black text for input */
+        }
+
+        .reset-button, .logout-button, .deposit-button {
+            width: 100%; /* Full width for better alignment */
+            padding: 12px; /* Adjust padding for the button */
+            margin-top: 10px; /* Space above the button */
+            background-color: #007BFF; /* Blue button color */
+            color: white;
+            border: none;
+            border-radius: 8px; /* Rounded corners */
+            cursor: pointer;
+            font-size: 16px; /* Consistent font size */
+            transition: background-color 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .reset-button:hover, .logout-button:hover, .deposit-button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #E1E1E1; /* Lighter text for footer */
+            font-size: 14px;
+        }
+
+        /* Loading screen styles */
+        #loadingScreen {
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed position to cover the entire screen */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9); /* White background with some transparency */
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+            padding-top: 20%;
+            z-index: 1000; /* High z-index to be on top */
+        }
+    </style>
+</head>
+<body>
+    <div id="loadingScreen">You are logging out...</div> <!-- Loading screen -->
+    <div class="container">
+        <h1>Profile</h1>
+        <div class="profile-info">
+            <label for="username">Name:</label>
+            <p id="username">John Doe</p> <!-- This will be updated dynamically -->
+        </div>
+        <div class="name-input">
+            <label for="newName">Change Name:</label>
+            <input type="text" id="newName" placeholder="Enter new name">
+            <button class="reset-button" id="changeNameButton">Change Name</button>
+        </div>
+        <div class="profile-info">
+            <label for="email">Email:</label>
+            <p id="email">johndoe@example.com</p> <!-- This will be updated dynamically -->
+        </div>
+        <div class="profile-info">
+            <label for="balance">Balance:</label>
+            <p id="balance">₱0.00</p>
+        </div>
+        <button class="deposit-button" id="depositButton">Deposit</button> <!-- New Deposit button -->
+        <button class="reset-button" id="resetButton">Reset Data</button>
+        <button class="logout-button" id="logoutButton">Log Out</button> <!-- Logout button -->
+        <div class="footer">
+            <p>&copy; 2024 Magnify! By Group 1. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script>
+        // Simulated login function to set user data
+        function setUserData(username, email) {
+            document.getElementById('username').innerText = username; // Set username
+            document.getElementById('email').innerText = email; // Set email
+        }
+
+        // Example of setting user data when logging in
+        window.onload = function() {
+            // Simulate user data after logging in
+            const loggedInUser = {
+                name: "Ron Asnahon", // This would be fetched from your authentication system
+                email: "asnahonron@gmail.com" // This would also be fetched from your authentication system
+            };
+
+            // Set user data dynamically
+            setUserData(loggedInUser.name, loggedInUser.email);
+        };
+
+        // JavaScript code to handle dynamic name change
+        document.getElementById('changeNameButton').onclick = function() {
+            const newName = document.getElementById('newName').value;
+            if (newName) {
+                document.getElementById('username').innerText = newName; // Update name dynamically
+                document.getElementById('newName').value = ''; // Clear input field
+            } else {
+                alert("Please enter a name.");
+            }
+        };
+
+        // Deposit functionality
+        document.getElementById('depositButton').onclick = function() {
+            window.location.href = 'Entrep10.html'; // Redirect to the Deposit page
+        };
+
+        // Logout functionality
+        document.getElementById('logoutButton').onclick = function() {
+            document.getElementById('loadingScreen').style.display = 'block'; // Show loading screen
+            setTimeout(function() {
+                window.location.href = 'Entrep5.html'; // Redirect after a delay
+            }, 2000); // Wait for 2 seconds before redirecting
+        };
+    </script>
+</body>
+</html>

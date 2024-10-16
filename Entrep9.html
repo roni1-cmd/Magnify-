@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your main CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            color: white;
+            padding: 20px;
+        }
+
+        #currencyConverter {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s; /* Add a transition for hover effect */
+        }
+
+        #currencyConverter:hover {
+            transform: scale(1.02); /* Slightly scale up on hover */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        #currencyConverter h2 {
+            margin-bottom: 20px;
+            text-align: center; /* Center align the heading */
+        }
+
+        #currencyConverter label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+
+        #currencyConverter input,
+        #currencyConverter select {
+            width: calc(100% - 22px); /* Adjust width for padding */
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensure padding is included in the width */
+            transition: background-color 0.3s; /* Transition for background color */
+        }
+
+        #currencyConverter input:focus,
+        #currencyConverter select:focus {
+            background-color: rgba(255, 255, 255, 0.2); /* Change background on focus */
+        }
+
+        #currencyConverter button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s; /* Add transition for button */
+        }
+
+        #currencyConverter button:hover {
+            background-color: #218838;
+            transform: translateY(-2px); /* Slightly lift the button on hover */
+        }
+
+        #conversionResult {
+            margin-top: 20px;
+            font-size: 1.2em;
+            opacity: 0; /* Start with invisible result */
+            transition: opacity 0.5s; /* Fade in effect */
+        }
+
+        #conversionResult.visible {
+            opacity: 1; /* Make it visible */
+        }
+
+        #notice {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #ffd700; /* Gold color for notice */
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="currencyConverter">
+        <h2>Magnify! Currency Converter</h2>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount" />
+
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+            <option value="PHP">Philippine Peso (PHP)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="CHF">Swiss Franc (CHF)</option>
+            <option value="CNY">Chinese Yuan (CNY)</option>
+            <option value="INR">Indian Rupee (INR)</option>
+        </select>
+
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+            <option value="PHP">Philippine Peso (PHP)</option>
+            <option value="USD">US Dollar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="GBP">British Pound (GBP)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="CHF">Swiss Franc (CHF)</option>
+            <option value="CNY">Chinese Yuan (CNY)</option>
+            <option value="INR">Indian Rupee (INR)</option>
+        </select>
+
+        <button id="convertCurrency">Convert</button>
+
+        <div id="conversionResult"></div>
+        <div id="notice">*Rates are averages and may not reflect actual current exchange rates.</div>
+    </div>
+
+    <script>
+        // Fixed exchange rates for conversion
+        const exchangeRates = {
+            PHP: 1,
+            USD: 55,
+            EUR: 60,
+            JPY: 0.37,
+            GBP: 70,
+            AUD: 40,  // Added Australian Dollar
+            CAD: 42,  // Added Canadian Dollar
+            CHF: 60,  // Added Swiss Franc
+            CNY: 8,   // Added Chinese Yuan
+            INR: 0.73 // Added Indian Rupee
+        };
+
+        document.getElementById('convertCurrency').addEventListener('click', () => {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('conversionResult').textContent = 'Please enter a valid amount.';
+                document.getElementById('conversionResult').classList.remove('visible'); // Hide result
+                return;
+            }
+
+            const convertedAmount = (amount * exchangeRates[fromCurrency]) / exchangeRates[toCurrency];
+            document.getElementById('conversionResult').textContent =
+                `${amount} ${fromCurrency} = ${convertedAmount.toFixed(2)} ${toCurrency}`;
+            document.getElementById('conversionResult').classList.add('visible'); // Show result
+        });
+    </script>
+</body>
+
+</html>
